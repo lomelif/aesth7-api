@@ -1,0 +1,15 @@
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/bin/Debug/net8.0/Aesth.Application.deps.json
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/bin/Debug/net8.0/Aesth.Application.dll
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/bin/Debug/net8.0/Aesth.Application.pdb
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/bin/Debug/net8.0/Aesth.Domain.dll
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/bin/Debug/net8.0/Aesth.Domain.pdb
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/obj/Debug/net8.0/Aesth.Application.csproj.AssemblyReference.cache
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/obj/Debug/net8.0/Aesth.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/obj/Debug/net8.0/Aesth.Application.AssemblyInfoInputs.cache
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/obj/Debug/net8.0/Aesth.Application.AssemblyInfo.cs
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/obj/Debug/net8.0/Aesth.Application.csproj.CoreCompileInputs.cache
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/obj/Debug/net8.0/Aesth.Ap.6C7C78C4.Up2Date
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/obj/Debug/net8.0/Aesth.Application.dll
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/obj/Debug/net8.0/refint/Aesth.Application.dll
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/obj/Debug/net8.0/Aesth.Application.pdb
+/Users/juanlomeli/Desktop/Aesth/Aesth.Application/obj/Debug/net8.0/ref/Aesth.Application.dll
