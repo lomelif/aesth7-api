@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Domain.Model;
+using Aesth.Domain.Models;
 
 namespace Aesth.Application.Interfaces;
 

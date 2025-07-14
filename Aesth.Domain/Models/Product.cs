@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Domain.Model;
+namespace Aesth.Domain.Models;
 
 public class Product
 {

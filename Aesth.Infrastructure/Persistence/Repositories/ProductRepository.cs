@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Aesth.Application.Interfaces;
 using Aesth.Infrastructure.Persistence.Mappers;
-using Domain.Model;
+using Aesth.Domain.Models;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Entities;
 using Infrastructure.Persistence.DbContexts;
@@ -59,7 +59,6 @@ public class ProductRepository : IProductRepository
         var details = ProductMapper.ToDetailEntities(domainProduct);
         var sizes = ProductMapper.ToSizeEntities(domainProduct);
 
-        // Asigna el id generado por la base de datos
         images.ForEach(i => i.product_id = productId);
         details.ForEach(d => d.product_id = productId);
         sizes.ForEach(s => s.product_id = productId);
@@ -76,7 +75,6 @@ public class ProductRepository : IProductRepository
         var existingEntity = _context.products.Find(domainProduct.Id);
         if (existingEntity == null) throw new KeyNotFoundException("Producto no encontrado");
 
-        // Actualiza campos simples
         existingEntity.name = domainProduct.Name;
         existingEntity.type = domainProduct.Type;
         existingEntity.price = domainProduct.Price;
@@ -88,7 +86,6 @@ public class ProductRepository : IProductRepository
 
         _context.SaveChanges();
 
-        // Actualiza colecciones relacionadas (simple: borra y vuelve a insertar)
         var productId = existingEntity.id;
 
         var existingImages = _context.product_images.Where(i => i.product_id == productId);
@@ -117,7 +114,6 @@ public class ProductRepository : IProductRepository
         var entity = _context.products.Find(id);
         if (entity == null) throw new KeyNotFoundException("Producto no encontrado");
 
-        // Borra colecciones relacionadas primero
         var images = _context.product_images.Where(i => i.product_id == id);
         var details = _context.product_details.Where(d => d.product_id == id);
         var sizes = _context.product_sizes.Where(s => s.product_id == id);
