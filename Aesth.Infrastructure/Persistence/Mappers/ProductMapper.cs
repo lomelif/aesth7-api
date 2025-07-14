@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Domain.Model;
+using Aesth.Domain.Models;
 using Infrastructure.Persistence.Entities;
 
 namespace Aesth.Infrastructure.Persistence.Mappers
 {
     public static class ProductMapper
     {
-        // Mapea de entidad EF a entidad de dominio
+
         public static Product ToDomain(
             product entity,
             IEnumerable<product_image> imageEntities,
@@ -44,7 +44,6 @@ namespace Aesth.Infrastructure.Persistence.Mappers
             };
         }
 
-        // Mapea de entidad de dominio a entidad EF (para guardar/actualizar)
         public static product ToEntity(Product domain)
         {
             return new product

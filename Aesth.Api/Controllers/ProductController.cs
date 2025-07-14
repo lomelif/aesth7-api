@@ -1,8 +1,9 @@
-
-
 using Aesth.Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
-using Domain.Model;
+using Aesth.Domain.Models;
+using Aesth.Application.DTOs.Products;
+using Aesth.Application.DTOs.Products.Mappers;
+using Aesth.Infrastructure.Persistence.Mappers;
 
 namespace Aesth.Api.Controllers;
 
@@ -35,35 +36,42 @@ public class ProductController : ControllerBase
     {
         var product = _getProductById.Execute(id);
         if (product == null) return NotFound();
-        return Ok(product);
+
+        var dto = ProductDtoMapper.ToDto(product);
+        return Ok(dto);
     }
 
     [HttpGet]
     public IActionResult GetAll()
     {
         var products = _getAllProducts.Execute();
-        return Ok(products);
+
+        var dtos = products.Select(p => ProductDtoMapper.ToDto(p));
+        return Ok(dtos);
     }
 
     [HttpPost]
-    public IActionResult Create([FromBody] Product product)
+    public IActionResult Create([FromBody] ProductCreateDto dto)
     {
-        _createProduct.Execute(product);
-        return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
+        var domain = ProductDtoMapper.ToDomain(dto);
+        _createProduct.Execute(domain);
+        return CreatedAtAction(nameof(GetById), new { id = domain.Id }, dto);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Update(long id, [FromBody] Product product)
+    public IActionResult Update(long id, [FromBody] ProductDto dto)
     {
-        if (id != product.Id) return BadRequest("ID mismatch");
-        _updateProduct.Execute(product);
-        return NoContent();
+        if (id != dto.Id) return BadRequest("ID mismatch");
+
+        var domain = ProductDtoMapper.ToDomain(dto);
+        _updateProduct.Execute(domain);
+        return Ok(dto);
     }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(long id)
     {
         _deleteProduct.Execute(id);
-        return NoContent();
+        return Ok(id);
     }
 }

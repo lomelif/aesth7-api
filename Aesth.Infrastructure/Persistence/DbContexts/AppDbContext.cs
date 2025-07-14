@@ -89,7 +89,7 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<product_detail>(entity =>
         {
-            entity.HasNoKey();
+            entity.HasKey(e => e.id);
 
             entity.Property(e => e.details).HasMaxLength(255);
 
@@ -101,7 +101,7 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<product_image>(entity =>
         {
-            entity.HasNoKey();
+            entity.HasKey(e => e.id);
 
             entity.Property(e => e.images).HasMaxLength(255);
 
@@ -113,7 +113,7 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<product_size>(entity =>
         {
-            entity.HasNoKey();
+            entity.HasKey(e => e.id);
 
             entity.Property(e => e.sizes).HasMaxLength(255);
 

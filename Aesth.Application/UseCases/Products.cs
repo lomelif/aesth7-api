@@ -1,5 +1,5 @@
 using Aesth.Application.Interfaces;
-using Domain.Model;
+using Aesth.Domain.Models;
 
 namespace Aesth.Application.UseCases;
 
