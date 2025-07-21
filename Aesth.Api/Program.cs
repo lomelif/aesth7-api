@@ -13,6 +13,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<GetProductById>();
 builder.Services.AddScoped<GetAllProducts>();
+builder.Services.AddScoped<GetLatestProducts>();
+builder.Services.AddScoped<GetTrendingProducts>();
+builder.Services.AddScoped<GetCatalogProducts>();
 builder.Services.AddScoped<CreateProduct>();
 builder.Services.AddScoped<UpdateProduct>();
 builder.Services.AddScoped<DeleteProduct>();
