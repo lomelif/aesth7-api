@@ -60,4 +60,30 @@ public static class ProductDtoMapper
             Views = 0
         };
     }
+
+    public static ProductShowDto ToProductShowDto(Product domain)
+    {
+        return new ProductShowDto
+        {
+            Id = domain.Id,
+            Name = domain.Name,
+            Price = domain.Price.ToString("F2"),
+            Images = domain.Images.FirstOrDefault() ?? ""
+        };
+    }
+
+    public static ProductCatalogDto ToProductCatalogDto(Product domain)
+    {
+        return new ProductCatalogDto
+        {
+            Id = domain.Id,
+            Name = domain.Name,
+            Type = domain.Type,
+            Price = domain.Price,
+            Color = domain.Color,
+            Release = domain.Release,
+            Views = domain.Views,
+            Images = domain.Images.FirstOrDefault() ?? ""
+        };
+    }
 }
