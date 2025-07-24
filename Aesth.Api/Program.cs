@@ -19,8 +19,14 @@ builder.Services.AddScoped<GetCatalogProducts>();
 builder.Services.AddScoped<CreateProduct>();
 builder.Services.AddScoped<UpdateProduct>();
 builder.Services.AddScoped<DeleteProduct>();
+builder.Services.AddScoped<GetUserById>();
+builder.Services.AddScoped<GetAllUsers>();
+builder.Services.AddScoped<CreateUser>();
+builder.Services.AddScoped<UpdateUser>();
+builder.Services.AddScoped<DeleteUser>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
