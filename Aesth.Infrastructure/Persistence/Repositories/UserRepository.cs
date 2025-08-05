@@ -16,6 +16,7 @@ namespace Aesth.Infrastructure.Persistence.Repositories
     {
         private readonly AppDbContext _context;
 
+
         public UserRepository(AppDbContext context)
         {
             _context = context;
@@ -38,10 +39,6 @@ namespace Aesth.Infrastructure.Persistence.Repositories
 
         public void Create(User domainUser)
         {
-            var hasher = new PasswordHasher<User>();
-            var hashedPassword = hasher.HashPassword(domainUser, domainUser.Password);
-            domainUser.Password = hashedPassword;
-
             var entity = UserMapper.ToEntity(domainUser);
             _context.app_users.Add(entity);
             _context.SaveChanges();
@@ -65,10 +62,7 @@ namespace Aesth.Infrastructure.Persistence.Repositories
                 existingEntity.role = domainUser.Role;
 
             if (!string.IsNullOrWhiteSpace(domainUser.Password))
-            {
-                var hasher = new PasswordHasher<User>();
-                existingEntity.password = hasher.HashPassword(domainUser, domainUser.Password);
-            }
+                existingEntity.password = domainUser.Password;
 
             _context.SaveChanges();
         }
@@ -80,6 +74,23 @@ namespace Aesth.Infrastructure.Persistence.Repositories
 
             _context.app_users.Remove(entity);
             _context.SaveChanges();
+        }
+
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            var entity = await _context.app_users.FirstOrDefaultAsync(u => u.email == email);
+            if (entity == null) return null;
+
+            return new User { Id = entity.id, Email = entity.email!, Password = entity.password!, Role = entity.role! };
+        }
+
+        public async Task CreateAsync(User domainUser)
+        {
+            var entity = UserMapper.ToEntity(domainUser);
+            _context.app_users.Add(entity);
+            await _context.SaveChangesAsync();
+
+            domainUser.Id = entity.id;
         }
     }
 }
