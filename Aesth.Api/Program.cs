@@ -1,6 +1,8 @@
 using Aesth.Application.Interfaces;
 using Aesth.Application.UseCases;
+using Aesth.Application.UseCases.Auth;
 using Aesth.Infrastructure.Persistence.Repositories;
+using Aesth.Infrastructure.Security;
 using Infrastructure.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +13,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200", "https://aesth7.com")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 builder.Services.AddScoped<GetProductById>();
 builder.Services.AddScoped<GetAllProducts>();
 builder.Services.AddScoped<GetLatestProducts>();
@@ -24,6 +38,11 @@ builder.Services.AddScoped<GetAllUsers>();
 builder.Services.AddScoped<CreateUser>();
 builder.Services.AddScoped<UpdateUser>();
 builder.Services.AddScoped<DeleteUser>();
+builder.Services.AddScoped<LoginUseCase>();
+builder.Services.AddScoped<RegisterUseCase>();
+
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -35,6 +54,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowFrontend");
 
 app.MapControllers();
 app.UseHttpsRedirection();

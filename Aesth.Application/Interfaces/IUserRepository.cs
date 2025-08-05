@@ -13,5 +13,7 @@ namespace Aesth.Application.Interfaces
         void Create(User product);
         void Update(User product);
         void Delete(long id);
+        Task CreateAsync(User user);
+        Task<User?> GetByEmailAsync(string email);
     }
 }
