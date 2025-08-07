@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Aesth.Infrastructure.Persistence.Entities;
 using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,21 +25,14 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<product_size> product_sizes { get; set; }
 
+    public DbSet<order> orders { get; set; }
+
+    public DbSet<order_address> order_adresses { get; set; }
+    
+    public DbSet<order_item> order_items { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder
-            .HasPostgresEnum("auth", "aal_level", new[] { "aal1", "aal2", "aal3" })
-            .HasPostgresEnum("auth", "code_challenge_method", new[] { "s256", "plain" })
-            .HasPostgresEnum("auth", "factor_status", new[] { "unverified", "verified" })
-            .HasPostgresEnum("auth", "factor_type", new[] { "totp", "webauthn", "phone" })
-            .HasPostgresEnum("auth", "one_time_token_type", new[] { "confirmation_token", "reauthentication_token", "recovery_token", "email_change_token_new", "email_change_token_current", "phone_change_token" })
-            .HasPostgresEnum("realtime", "action", new[] { "INSERT", "UPDATE", "DELETE", "TRUNCATE", "ERROR" })
-            .HasPostgresEnum("realtime", "equality_op", new[] { "eq", "neq", "lt", "lte", "gt", "gte", "in" })
-            .HasPostgresExtension("extensions", "pg_stat_statements")
-            .HasPostgresExtension("extensions", "pgcrypto")
-            .HasPostgresExtension("extensions", "uuid-ossp")
-            .HasPostgresExtension("graphql", "pg_graphql")
-            .HasPostgresExtension("vault", "supabase_vault");
 
         modelBuilder.Entity<address>(entity =>
         {

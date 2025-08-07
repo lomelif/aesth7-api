@@ -1,8 +1,11 @@
 using Aesth.Application.Interfaces;
 using Aesth.Application.UseCases;
 using Aesth.Application.UseCases.Auth;
+using Aesth.Application.UseCases.Checkout;
+using Aesth.Application.UseCases.Order;
 using Aesth.Infrastructure.Persistence.Repositories;
 using Aesth.Infrastructure.Security;
+using Aesth.Infrastructure.Services;
 using Infrastructure.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,12 +19,19 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", policy =>
+    options.AddPolicy("FrontendPolicy", policy =>
     {
         policy.WithOrigins("http://localhost:4200", "https://aesth7.com")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
+    });
+
+    options.AddPolicy("StripeWebhookPolicy", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
@@ -40,12 +50,16 @@ builder.Services.AddScoped<UpdateUser>();
 builder.Services.AddScoped<DeleteUser>();
 builder.Services.AddScoped<LoginUseCase>();
 builder.Services.AddScoped<RegisterUseCase>();
+builder.Services.AddScoped<CreateCheckoutSessionUseCase>();
+builder.Services.AddScoped<CreateOrderUseCase>();
 
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<ICheckoutService, StripeCheckoutService>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 var app = builder.Build();
 
@@ -55,9 +69,27 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors("AllowFrontend");
-
-app.MapControllers();
 app.UseHttpsRedirection();
+app.UseRouting();
+
+app.Use(async (context, next) =>
+{
+    await next();
+});
+
+app.Map("/api/Order", webhookApp =>
+{
+    webhookApp.UseCors("StripeWebhookPolicy");
+    
+    webhookApp.Use(async (context, next) =>
+    {
+        await next();
+    });
+    
+    webhookApp.UseEndpoints(endpoints => endpoints.MapControllers());
+});
+
+app.UseCors("FrontendPolicy");
+app.MapControllers();
 
 app.Run();
