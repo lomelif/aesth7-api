@@ -14,13 +14,31 @@ namespace Aesth.Api.Controllers
     [Route("api/Order")]
     public class OrderController : ControllerBase
     {
-        private readonly CreateOrderUseCase _orderUseCase;
+        private readonly CreateOrderUseCase _createOrderUseCase;
+        private readonly GetOrdersByEmailUseCase _getOrdersByEmailUseCase;
         private readonly string endpointSecret;
 
-        public OrderController(IConfiguration config, CreateOrderUseCase orderUseCase)
+        public OrderController(IConfiguration config, CreateOrderUseCase orderUseCase, GetOrdersByEmailUseCase getOrdersByEmailUseCase)
         {
             endpointSecret = config["Stripe:WebhookSecret"]!;
-            _orderUseCase = orderUseCase;
+            _createOrderUseCase = orderUseCase;
+            _getOrdersByEmailUseCase = getOrdersByEmailUseCase;
+        }
+
+        [HttpGet("ByEmail")]
+        public async Task<ActionResult<List<OrderDto>>> GetOrdersByEmail([FromQuery] string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return BadRequest("Email parameter is required.");
+            }
+
+            var orders = await _getOrdersByEmailUseCase.GetOrdersByEmailAsync(email);
+
+            if (orders == null || orders.Count == 0)
+                return NotFound("No orders found for the given email.");
+
+            return Ok(orders);
         }
 
         [HttpPost]
@@ -74,7 +92,7 @@ namespace Aesth.Api.Controllers
                         Items = itemsDto
                     };
 
-                    await _orderUseCase.SaveOrderAsync(dto);
+                    await _createOrderUseCase.SaveOrderAsync(dto);
                 }
 
                 return Ok();

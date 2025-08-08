@@ -15,7 +15,7 @@ namespace Aesth.Infrastructure.Persistence.DbContexts
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
-            optionsBuilder.UseNpgsql("Host=db.apsnxcnzwhygiruighvy.supabase.co;Port=6543;Database=postgres;Username=postgres;Password=EV6n6OYL35j5uZFh;SSL Mode=Require;Trust Server Certificate=true;Timeout=15;Command Timeout=30;Pooling=true;Maximum Pool Size=100");
+            optionsBuilder.UseNpgsql("Host=localhost;Database=TuBase;Username=tu_usuario;Password=tu_password");
 
             return new AppDbContext(optionsBuilder.Options);
         }
