@@ -9,5 +9,6 @@ namespace Aesth.Application.Interfaces
     public interface IOrderRepository
     {
         Task SaveAsync(Order order);
+        Task<List<Order>> GetOrdersByEmailAsync(string email);
     }
 }

@@ -13,5 +13,8 @@ namespace Aesth.Infrastructure.Persistence.Entities
         public long price { get; set; }
         public int quantity { get; set; }
         public string? image { get; set; }
+
+        public Guid orderid { get; set; }
+        public order? Order { get; set; }
     }
 }

@@ -52,6 +52,7 @@ builder.Services.AddScoped<LoginUseCase>();
 builder.Services.AddScoped<RegisterUseCase>();
 builder.Services.AddScoped<CreateCheckoutSessionUseCase>();
 builder.Services.AddScoped<CreateOrderUseCase>();
+builder.Services.AddScoped<GetOrdersByEmailUseCase>();
 
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<ICheckoutService, StripeCheckoutService>();
