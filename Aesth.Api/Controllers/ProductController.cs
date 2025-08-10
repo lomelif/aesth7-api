@@ -5,6 +5,7 @@ using Aesth.Application.DTOs.Products;
 using Aesth.Application.DTOs.Products.Mappers;
 using Aesth.Infrastructure.Persistence.Mappers;
 using Aesth.Application.Common;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Aesth.Api.Controllers;
 
@@ -100,6 +101,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "ADMIN")]
     public IActionResult Create([FromBody] ProductCreateDto dto)
     {
         var domain = ProductDtoMapper.ToDomain(dto);
@@ -108,6 +110,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "ADMIN")]
     public IActionResult Update(long id, [FromBody] ProductDto dto)
     {
         if (id != dto.Id) return BadRequest("ID mismatch");
@@ -118,6 +121,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "ADMIN")]
     public IActionResult Delete(long id)
     {
         _deleteProduct.Execute(id);
