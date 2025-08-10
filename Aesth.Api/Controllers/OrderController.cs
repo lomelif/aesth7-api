@@ -7,6 +7,7 @@ using Stripe.Checkout;
 using Aesth.Application.DTOs.Checkout;
 using Aesth.Application.UseCases.Order;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Aesth.Api.Controllers
 {
@@ -26,8 +27,16 @@ namespace Aesth.Api.Controllers
         }
 
         [HttpGet("ByEmail")]
+        [Authorize]
         public async Task<ActionResult<List<OrderDto>>> GetOrdersByEmail([FromQuery] string email)
         {
+            var emailClaim = User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value;
+
+            if (emailClaim == null || !emailClaim.Equals(email, StringComparison.OrdinalIgnoreCase))
+            {
+                return Forbid();
+            }
+
             if (string.IsNullOrWhiteSpace(email))
             {
                 return BadRequest("Email parameter is required.");

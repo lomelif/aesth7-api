@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Aesth.Application.DTOs.Users;
 using Aesth.Application.DTOs.Users.Mapper;
 using Aesth.Application.UseCases;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Aesth.Api.Controllers
@@ -34,8 +35,16 @@ namespace Aesth.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult GetById(long id)
         {
+            var userIdClaim = User.FindFirst("UserId")?.Value;
+
+            if (userIdClaim == null || userIdClaim != id.ToString())
+            {
+                return Forbid();
+            }
+
             var product = _getUserById.Execute(id);
             if (product == null) return NotFound();
 
@@ -44,6 +53,7 @@ namespace Aesth.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult GetAll()
         {
             var users = _getAllUsers.Execute();
@@ -53,6 +63,7 @@ namespace Aesth.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Create([FromBody] UserCreateDto dto)
         {
             var domain = UserDtoMapper.ToDomain(dto);
@@ -61,8 +72,16 @@ namespace Aesth.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult Update(long id, [FromBody] UserDto dto)
         {
+            var userIdClaim = User.FindFirst("UserId")?.Value;
+
+            if (userIdClaim == null || userIdClaim != id.ToString())
+            {
+                return Forbid();
+            }
+
             if (id != dto.Id) return BadRequest("ID mismatch");
 
             var domain = UserDtoMapper.ToDomain(dto);
@@ -71,6 +90,7 @@ namespace Aesth.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Delete(long id)
         {
             _deleteUser.Execute(id);
