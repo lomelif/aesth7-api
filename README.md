@@ -1,37 +1,37 @@
 # 🔧 AESTH7 – E-Commerce Backend
 
-Backend REST API para el e-commerce AESTH7, desarrollado con ASP.NET 8.  
-Provee funcionalidades de gestión de productos, usuarios, autenticación y procesamiento de pagos.
+REST API backend for the AESTH7 e-commerce, developed with ASP.NET 8.  
+Provides functionality for managing products, users, authentication, and payment processing.
 
 ---
 
-## ✨ Características
+## ✨ Features
 
-- 🛠️ API RESTful con endpoints para productos, usuarios, autenticación y órdenes.
-- 🔐 Autenticación y autorización con JWT.
-- 🗄️ Base de datos relacional PostgreSQL con migraciones.
-- 💳 Integración con Stripe para procesamiento de pagos.
-- 🚀 Arquitectura limpia y modular.
-
----
-
-## 🛠️ Tecnologías
-
-![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?style=for-the-badge&logo=postgresql&logoColor=white) ![JWT](https://img.shields.io/badge/JWT-Auth-yellow?style=for-the-badge&logo=json-web-tokens&logoColor=white) ![Stripe](https://img.shields.io/badge/Stripe-Pagos-blueviolet?style=for-the-badge&logo=stripe&logoColor=white)
+- 🛠️ RESTful API with endpoints for products, users, authentication, and orders.
+- 🔐 Authentication and authorization using JWT.
+- 🗄️ Relational PostgreSQL database with migrations.
+- 💳 Stripe integration for payment processing.
+- 🚀 Clean and modular architecture.
 
 ---
 
-## 📚 Endpoints principales
+## 🛠️ Technologies
+
+![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?style=for-the-badge&logo=postgresql&logoColor=white) ![JWT](https://img.shields.io/badge/JWT-Auth-yellow?style=for-the-badge&logo=json-web-tokens&logoColor=white) ![Stripe](https://img.shields.io/badge/Stripe-Payments-blueviolet?style=for-the-badge&logo=stripe&logoColor=white)
+
+---
+
+## 📚 Main Endpoints
 
 <div align="center">
 
-| Método | Ruta                  | Descripción                    |
-|--------|-----------------------|-------------------------------|
-| POST   | `/api/Auth/Login`      | Iniciar sesión y obtener JWT  |
-| POST   | `/api/Auth/Register`   | Registrar nuevo usuario       |
-| GET    | `/api/Product`         | Listar productos              |
-| GET    | `/api/Product/{id}`    | Detalle de producto           |
-| GET    | `/api/Order/ByEmail`   | Listar órdenes por email      |
-| POST   | `/api/Order`           | Crear orden y procesar pago   |
+| Method | Route                  | Description                    |
+|--------|------------------------|-------------------------------|
+| POST   | `/api/Auth/Login`       | Login and obtain JWT token    |
+| POST   | `/api/Auth/Register`    | Register new user             |
+| GET    | `/api/Product`          | List products                |
+| GET    | `/api/Product/{id}`     | Product details              |
+| GET    | `/api/Order/ByEmail`    | List orders by email         |
+| POST   | `/api/Order`            | Create order and process payment |
 
 </div>
