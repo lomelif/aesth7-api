@@ -7,9 +7,11 @@ namespace Aesth.Application.DTOs.Checkout
 {
     public class OrderDto
     {
-        public List<OrderItemDto>? Items { get; set; }
-        public AddressDto? ShippingAddress { get; set; }
+        public Guid? Id { get; set; }
         public string? StripeSessionId { get; set; }
         public string? Email { get; set; }
+        public DateTime Date { get; set; }
+        public List<OrderItemDto>? Items { get; set; }
+        public AddressDto? ShippingAddress { get; set; }
     }
 }
