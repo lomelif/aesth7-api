@@ -21,8 +21,9 @@ namespace Aesth.Application.UseCases.Order
             var orders = await _orderRepository.GetOrdersByEmailAsync(email);
             return orders.Select(o => new OrderDto
             {
-                StripeSessionId = o.StripeSessionId,
+                Id = o.Id,
                 Email = o.Email,
+                Date = o.CreatedAt,
                 ShippingAddress = o.Address == null ? null : new AddressDto
                 {
                     Line1 = o.Address.Line1,
